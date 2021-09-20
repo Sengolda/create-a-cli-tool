@@ -33,11 +33,9 @@ class CLI:
         args = input(">>> ")
         while len(args) > 0 and args not in ("exit", "quit"):
             cmd = self.get_command(args)
-            try:
-                cmd._func()
-            except AttributeError:
+            if not cmd:
                 print(self.command_not_found_message)
-
+            cmd._func()
             break
     
 

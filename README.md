@@ -12,6 +12,19 @@
 pip install -U git+https://github.com/Sengolda/create-a-cli-tool.git
 ```
 
+## Quick Example
+```py
+from cli.cli import CLI
+
+my_cli = CLI("My Nice CLI tool!")
+
+@my_cli.command(name="hi")
+def hi():
+    print("Hello World!")
+
+my_cli.run()
+```
+
 ## Author
 
 👤 **Sengolda**

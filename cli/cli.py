@@ -35,6 +35,8 @@ class CLI:
             cmd = self.get_command(args)
             if not cmd:
                 print(self.command_not_found_message)
+                return
+                
             cmd._func()
             break
     

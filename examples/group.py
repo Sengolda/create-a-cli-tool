@@ -8,7 +8,7 @@ async def hi():
     print("Hello World!")
 
 
-@hi.command(name="you")
+@hi.command(name="you", description="Are you cool?")
 def you():
     print("Hi you, yes you are cool!")
 

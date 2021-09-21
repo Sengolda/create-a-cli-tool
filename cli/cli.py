@@ -1,4 +1,6 @@
 from .commands import Command,CommandGroup as Group
+import inspect
+
 
 
 class CLI:
@@ -15,6 +17,9 @@ class CLI:
 
     def command(self, name: str = None):
         def decorator(func):
+            if inspect.iscoroutinefunction(func):
+                raise RuntimeError("Functions must not be coroutines.")
+        
             if not name:
                 cmd = Command.from_function(func)
             else:
@@ -30,6 +35,9 @@ class CLI:
     
     def group(self, name: str = None):
         def decorator(func):
+            if inspect.iscoroutinefunction(func):
+                raise RuntimeError("Functions must not be coroutines.")
+            
             if not name:
                 cmd = Group.from_function(func)
             else:

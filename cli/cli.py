@@ -9,6 +9,17 @@ G = TypeVar("G", bound=Group)
 
 
 class CLI:
+    """
+    The CLI class it self, this will represent your cli.
+
+    :param name: The name of your CLI 
+    :type name: str
+    :param no_welcome_message: Choose if you want to display a welcome message or not.
+    :type no_welcome_message: bool
+    :param command_not_found_message: Pick whatever error message you want to print out when a command is not found.
+    :type command_not_found_message: str
+    """
+
     def __init__(
         self,
         name,
@@ -23,6 +34,15 @@ class CLI:
         self.command_not_found_message = command_not_found_message
 
     def command(self, name: Optional[str] = None, description: Optional[str] = None):
+        """
+        Make a command for your cli.
+
+        :param name: The name of the command, Default to the name of your function.
+        :type name: str
+        :param description: The description of the command, Defaults to the function's doc.
+        :type description: str
+        """
+
         def decorator(func: T) -> T:
             if inspect.iscoroutinefunction(func):
                 raise RuntimeError("Functions must not be coroutines.")
@@ -41,6 +61,15 @@ class CLI:
         return decorator
 
     def group(self, name: Optional[str] = None, description: Optional[str] = None):
+        """
+        Make a command group for your cli.
+
+        :param name: The name of the group, Default to the name of your function.
+        :type name: str
+        :param description: The description of the group, Defaults to the function's doc.
+        :type description: str
+        """
+
         def decorator(func: T) -> T:
             if inspect.iscoroutinefunction(func):
                 raise RuntimeError("Functions must not be coroutines.")
@@ -55,6 +84,11 @@ class CLI:
         return decorator
 
     def run(self):
+        """
+        Run your cli.
+        """
+
+
         if not self.no_welcome_message:
             print("Welcome to " + self.name)
 
@@ -82,6 +116,12 @@ class CLI:
                 return command
 
     def remove_command(self, name: str):
+        """
+        Remove a command.
+
+        :param name: The name of the command.
+        :type name: str
+        """
         for cmd in self.commands:
             if cmd.name == name:
                 self.commands.remove(cmd)

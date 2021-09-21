@@ -12,7 +12,7 @@ class CLI:
     """
     The CLI class it self, this will represent your cli.
 
-    :param name: The name of your CLI 
+    :param name: The name of your CLI
     :type name: str
     :param no_welcome_message: Choose if you want to display a welcome message or not.
     :type no_welcome_message: bool
@@ -87,7 +87,6 @@ class CLI:
         """
         Run your cli.
         """
-
 
         if not self.no_welcome_message:
             print("Welcome to " + self.name)

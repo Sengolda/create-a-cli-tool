@@ -12,11 +12,7 @@ with open("README.md", "r") as f:
 if not version:
     raise RuntimeError("version not set...")
 
-extra_requires = {
-    "docs": [
-        "sphinx>=4.0.2"
-    ]
-}
+extra_requires = {"docs": ["sphinx>=4.0.2"]}
 
 packages = ["cli"]
 

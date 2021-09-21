@@ -81,7 +81,7 @@ class CLI:
             if command.name == name:
                 return command
 
-    def remove_command(self, name: str) -> C:
+    def remove_command(self, name: str):
         for cmd in self.commands:
             if cmd.name == name:
                 self.commands.remove(cmd)

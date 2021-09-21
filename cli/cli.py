@@ -10,7 +10,9 @@ class CLI:
         command_not_found_message="Command not found.",
     ):
         self.name = str(name)
-        self.commands = [Command(name="help", func=self.show_help, description="Shows this message.")]
+        self.commands = [
+            Command(name="help", func=self.show_help, description="Shows this message.")
+        ]
         self.no_welcome_message = no_welcome_message
         self.command_not_found_message = command_not_found_message
 
@@ -77,7 +79,6 @@ class CLI:
         for cmd in self.commands:
             if cmd.name == name:
                 self.commands.remove(cmd)
-    
 
     def show_help(self):
         for cmd in self.commands:

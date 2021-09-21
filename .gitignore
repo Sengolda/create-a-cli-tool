@@ -1,3 +1,4 @@
 **__pycache__/
 test.py
 docs/_build
+*.DS_Store

@@ -86,6 +86,6 @@ class CLI:
             if cmd.name == name:
                 self.commands.remove(cmd)
 
-    def show_help(self):
+    def show_help(self) -> None:
         for cmd in self.commands:
             print(f"{cmd.name} - {cmd.description}")

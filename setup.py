@@ -1,12 +1,12 @@
 from setuptools import setup
 import re
 
-with open("cli/__init__.py", "r", encoding='utf-8') as f:
+with open("cli/__init__.py", "r", encoding="utf-8") as f:
     version = re.search(
         r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE
     ).group(1)
 
-with open("README.md", "r",  encoding='utf-8') as f:
+with open("README.md", "r", encoding="utf-8") as f:
     long_description = f.read()
 
 if not version:

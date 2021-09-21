@@ -1,4 +1,4 @@
-from .commands import Command
+from .commands import Command,CommandGroup as Group
 
 
 class CLI:
@@ -27,22 +27,47 @@ class CLI:
             return cmd
 
         return decorator
+    
+    def group(self, name: str = None):
+        def decorator(func):
+            if not name:
+                cmd = Group.from_function(func)
+            else:
+                cmd = Group(name=name, func=func)
+            self.commands.append(cmd)
+            return cmd
+        return decorator
+
 
     def run(self):
         if not self.no_welcome_message:
             print("Welcome to " + self.name)
 
-        args = input(">>> ")
-        while len(args) > 0 and args not in ("exit", "quit"):
-            cmd = self.get_command(args)
+        args = input(">>> ").split()
+        while len(args) > 0 and args[0] not in ("exit", "quit"):
+            cmd = self.get_command(args[0])
             if not cmd:
                 print(self.command_not_found_message)
                 return
-
-            cmd._func()
-            break
+            
+            elif isinstance(cmd, Command) and len(args) == 1:
+                cmd._func()
+                break
+            
+            elif len(args) == 2:
+                for subcmd in cmd:
+                    if subcmd.name == args[1]:
+                        subcmd._func()
+                        break
+                break
 
     def get_command(self, name: str):
         for command in self.commands:
             if command.name == name:
                 return command
+    
+
+    def remove_command(self, name: str):
+        for cmd in self.commands:
+            if cmd.name == name:
+                self.commands.remove(cmd)

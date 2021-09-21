@@ -9,7 +9,7 @@
 ## Install
 
 ```sh
-pip install -U git+https://github.com/Sengolda/create-a-cli-tool.git
+pip install -U create-a-cli-tool
 ```
 
 ## Features

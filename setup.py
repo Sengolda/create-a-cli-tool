@@ -6,7 +6,7 @@ with open("cli/__init__.py", "r", encoding='utf-8') as f:
         r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE
     ).group(1)
 
-with open("README.md", "r") as f:
+with open("README.md", "r",  encoding='utf-8') as f:
     long_description = f.read()
 
 if not version:

@@ -10,11 +10,11 @@ class CLI:
         command_not_found_message="Command not found.",
     ):
         self.name = str(name)
-        self.commands = []
+        self.commands = [Command(name="help", func=self.show_help, description="Shows this message.")]
         self.no_welcome_message = no_welcome_message
         self.command_not_found_message = command_not_found_message
 
-    def command(self, name: str = None):
+    def command(self, name: str = None, description: str = None):
         def decorator(func):
             if inspect.iscoroutinefunction(func):
                 raise RuntimeError("Functions must not be coroutines.")
@@ -22,7 +22,7 @@ class CLI:
             if not name:
                 cmd = Command.from_function(func)
             else:
-                cmd = Command(name=name, func=func)
+                cmd = Command(name=name, func=func, description=description)
 
             if cmd.name.count(" ") > 0:
                 raise RuntimeError("Command cannot have spaces.")
@@ -32,7 +32,7 @@ class CLI:
 
         return decorator
 
-    def group(self, name: str = None):
+    def group(self, name: str = None, description: str = None):
         def decorator(func):
             if inspect.iscoroutinefunction(func):
                 raise RuntimeError("Functions must not be coroutines.")
@@ -40,7 +40,7 @@ class CLI:
             if not name:
                 cmd = Group.from_function(func)
             else:
-                cmd = Group(name=name, func=func)
+                cmd = Group(name=name, func=func, description=description)
             self.commands.append(cmd)
             return cmd
 
@@ -77,3 +77,8 @@ class CLI:
         for cmd in self.commands:
             if cmd.name == name:
                 self.commands.remove(cmd)
+    
+
+    def show_help(self):
+        for cmd in self.commands:
+            print(f"{cmd.name} - {cmd.description}")

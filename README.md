@@ -12,6 +12,10 @@
 pip install -U git+https://github.com/Sengolda/create-a-cli-tool.git
 ```
 
+## Features
+* Easy-to-use.
+* Comes with a default help command for your cli.
+
 ## Quick Example
 ```py
 from cli.cli import CLI

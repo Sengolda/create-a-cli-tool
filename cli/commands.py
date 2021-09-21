@@ -1,3 +1,7 @@
+from typing import TypeVar, List
+
+T = TypeVar("T")
+
 class Command:
     def __init__(self, **kwargs):
         self.name = kwargs.pop("name", None) or str(self._func.__name__)
@@ -9,20 +13,22 @@ class Command:
         return cls(func=function, name=function.__name__, description=function.__doc__)
 
 
+C = TypeVar("C", bound=Command)
+
 class CommandGroup(Command):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.children = []
+        self.children: List[C] = []
 
     def __iter__(self):
         return iter(self.children)
 
-    def command(self, name: str = None, description: str = None):
+    def command(self, name: str = None, description: str = None) -> T:
         def decorator(func):
             if not name:
-                command = Command.from_function(func)
+                command: C = Command.from_function(func)
             else:
-                command = Command(name=name, func=func, description=description)
+                command: C = Command(name=name, func=func, description=description)
 
             if command.name.count(" ") > 0:
                 raise RuntimeError("Command names cannot have spaces.")

@@ -1,6 +1,11 @@
 from .commands import Command, CommandGroup as Group
 import inspect
+from typing import List, TypeVar, Optional
 
+
+T = TypeVar("T")
+C = TypeVar("C", bound=Command)
+G = TypeVar("G", bound=Group)
 
 class CLI:
     def __init__(
@@ -10,21 +15,21 @@ class CLI:
         command_not_found_message="Command not found.",
     ):
         self.name = str(name)
-        self.commands = [
+        self.commands: List[C] = [
             Command(name="help", func=self.show_help, description="Shows this message.")
         ]
         self.no_welcome_message = no_welcome_message
         self.command_not_found_message = command_not_found_message
 
-    def command(self, name: str = None, description: str = None):
-        def decorator(func):
+    def command(self, name: Optional[str] = None, description: Optional[str] = None):
+        def decorator(func: T) -> T:
             if inspect.iscoroutinefunction(func):
                 raise RuntimeError("Functions must not be coroutines.")
 
             if not name:
-                cmd = Command.from_function(func)
+                cmd: C = Command.from_function(func)
             else:
-                cmd = Command(name=name, func=func, description=description)
+                cmd: C = Command(name=name, func=func, description=description)
 
             if cmd.name.count(" ") > 0:
                 raise RuntimeError("Command cannot have spaces.")
@@ -34,15 +39,15 @@ class CLI:
 
         return decorator
 
-    def group(self, name: str = None, description: str = None):
-        def decorator(func):
+    def group(self, name: Optional[str] = None, description: Optional[str] = None):
+        def decorator(func: T) -> T:
             if inspect.iscoroutinefunction(func):
                 raise RuntimeError("Functions must not be coroutines.")
 
             if not name:
-                cmd = Group.from_function(func)
+                cmd: G = Group.from_function(func)
             else:
-                cmd = Group(name=name, func=func, description=description)
+                cmd: G = Group(name=name, func=func, description=description)
             self.commands.append(cmd)
             return cmd
 
@@ -70,16 +75,16 @@ class CLI:
                         break
                 break
 
-    def get_command(self, name: str):
+    def get_command(self, name: str) -> C:
         for command in self.commands:
             if command.name == name:
                 return command
 
-    def remove_command(self, name: str):
+    def remove_command(self, name: str) -> C:
         for cmd in self.commands:
             if cmd.name == name:
                 self.commands.remove(cmd)
 
-    def show_help(self):
+    def show_help(self) -> str:
         for cmd in self.commands:
             print(f"{cmd.name} - {cmd.description}")

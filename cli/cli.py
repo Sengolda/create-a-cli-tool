@@ -7,6 +7,7 @@ T = TypeVar("T")
 C = TypeVar("C", bound=Command)
 G = TypeVar("G", bound=Group)
 
+
 class CLI:
     def __init__(
         self,

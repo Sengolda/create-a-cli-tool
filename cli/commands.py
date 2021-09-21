@@ -2,6 +2,7 @@ from typing import TypeVar, List
 
 T = TypeVar("T")
 
+
 class Command:
     def __init__(self, **kwargs):
         self.name = kwargs.pop("name", None) or str(self._func.__name__)
@@ -14,6 +15,7 @@ class Command:
 
 
 C = TypeVar("C", bound=Command)
+
 
 class CommandGroup(Command):
     def __init__(self, **kwargs):

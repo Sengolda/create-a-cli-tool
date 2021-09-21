@@ -29,7 +29,7 @@ args = dict(
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
-        'Typing :: Typed',
+        "Typing :: Typed",
     ],
     packages=packages,
     include_package_data=True,

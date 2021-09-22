@@ -1,4 +1,5 @@
 from typing import List, TypeVar
+from .errors import CommandAlreadyExists
 
 T = TypeVar("T")
 
@@ -34,6 +35,12 @@ class CommandGroup(Command):
 
             if command.name.count(" ") > 0:
                 raise RuntimeError("Command names cannot have spaces.")
+
+            if command in self.children:
+                raise CommandAlreadyExists(
+                    f"A command named {command.name} is already in {self.name} group."
+                )
+
             self.children.append(command)
             return command
 

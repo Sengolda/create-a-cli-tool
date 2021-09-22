@@ -1,5 +1,5 @@
 import inspect
-from typing import List, Optional, TypeVar
+from typing import List, Optional, Union, TypeVar
 
 from .commands import Command
 from .commands import CommandGroup as Group
@@ -90,6 +90,15 @@ class CLI:
                 cmd: G = Group.from_function(func)
             else:
                 cmd: G = Group(name=name, func=func, description=description)
+
+            if cmd.name.count(" ") > 0:
+                raise NameHasSpaces("Command cannot have spaces.")
+
+            if cmd in self.commands:
+                raise CommandAlreadyExists(
+                    f"The group named {cmd.name} already exists."
+                )
+
             self.commands.append(cmd)
             return cmd
 
@@ -121,7 +130,7 @@ class CLI:
                         break
                 break
 
-    def get_command(self, name: str) -> C:
+    def get_command(self, name: str) -> Union[C, G]:
         for command in self.commands:
             if command.name == name:
                 return command

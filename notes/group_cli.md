@@ -20,6 +20,6 @@ async def hi():
 def you():
     print("Hi you, yes you are cool!")
 
-# Running Command
+# Running CLI
 my_cli.run()
 ```

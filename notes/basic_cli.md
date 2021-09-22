@@ -13,6 +13,6 @@ my_cli = CLI("My Nice CLI tool!")
 def hi(): # Creating Command Function
     print("Hello World!") # Implementing Command Function
 
-# Running Command
+# Running CLI
 my_cli.run()
 ```

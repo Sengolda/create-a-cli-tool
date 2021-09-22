@@ -61,10 +61,11 @@ class CLI:
 
             if cmd.name.count(" ") > 0:
                 raise NameHasSpaces("Command cannot have spaces.")
-            
 
             if cmd in self.commands:
-                raise CommandAlreadyExists(f"The command named {cmd.name} already exists.")
+                raise CommandAlreadyExists(
+                    f"The command named {cmd.name} already exists."
+                )
 
             self.commands.append(cmd)
             return cmd

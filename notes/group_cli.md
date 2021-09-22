@@ -7,7 +7,7 @@
 # Importing CLI Tool Maker
 from cli.cli import CLI
 
-# Naming CLI Tool Maker
+# Naming CLI Tool 
 my_cli = CLI("My Nice CLI tool!")
 
 # Syntax To Create CLI Group Commands

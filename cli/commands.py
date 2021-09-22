@@ -4,6 +4,7 @@ from .errors import CommandAlreadyExists
 T = TypeVar("T")
 C = TypeVar("C", bound="Command")
 
+
 class Command:
     def __init__(self, **kwargs):
         self.name = kwargs.pop("name", None) or str(self._func.__name__)
@@ -13,7 +14,6 @@ class Command:
     @classmethod
     def from_function(cls: Type[C], function: Callable[..., Any]) -> C:
         return cls(func=function, name=function.__name__, description=function.__doc__)
-
 
 
 class CommandGroup(Command):

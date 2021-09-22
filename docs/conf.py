@@ -29,6 +29,8 @@ with open("../cli/__init__.py") as f:
     ).group(1)
 
 
+release = str(version)
+
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be

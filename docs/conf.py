@@ -68,7 +68,5 @@ html_static_path = ["_static"]
 
 html_context = {
     "issues": "https://github.com/Sengolda/create-a-cli-tool/issues",
-    "extensions": [
-        ("cli.ext", "ext/")
-    ]
-    }
+    "extensions": [("cli.ext", "ext/")],
+}

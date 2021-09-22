@@ -66,4 +66,9 @@ html_theme = "furo"
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 
-html_context = {"issues": "https://github.com/Sengolda/create-a-cli-tool/issues"}
+html_context = {
+    "issues": "https://github.com/Sengolda/create-a-cli-tool/issues",
+    "extensions": [
+        ("cli.ext", "ext/")
+    ]
+    }

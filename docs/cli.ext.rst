@@ -1,13 +1,13 @@
-ext package
-===========
+cli.ext package
+===============
 
 Submodules
 ----------
 
-ext.shard module
-----------------
+cli.ext.shard module
+--------------------
 
-.. automodule:: ext.shard
+.. automodule:: cli.ext.shard
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ ext.shard module
 Module contents
 ---------------
 
-.. automodule:: ext
+.. automodule:: cli.ext
    :members:
    :undoc-members:
    :show-inheritance:

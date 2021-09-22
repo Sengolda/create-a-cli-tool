@@ -1,4 +1,4 @@
-# Notes for Basic CLI Commands
+# Notes for [Basic CLI Commands]
 
 ### Code:
 ```py

@@ -135,5 +135,11 @@ class CLI:
             print(f"{cmd.name} - {cmd.description}")
 
     def add_shard(self, shard):
+        """
+        Add a shard to the cli.
+
+        :param shard: The shard class you want to add.
+        :type shard: cli.ext.shard.Shard
+        """
         shard = shard
         shard._inject()

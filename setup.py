@@ -36,7 +36,7 @@ args = dict(
     ],
     packages=packages,
     include_package_data=True,
-    python_requires=">=3.2",
+    python_requires=">=3.6", # Cause of f-strings.
     license="MIT",
     extra_requires=extra_requires,
 )

@@ -12,6 +12,7 @@ class Shard:
     :param cli: Your CLI class.
     :type cli: cli.cli.CLI
     """
+
     def __init__(self, cli: CLI):
         self.cli = cli
 

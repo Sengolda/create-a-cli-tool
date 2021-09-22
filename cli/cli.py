@@ -13,6 +13,7 @@ G = TypeVar("G", bound=Group)
 class ExtensionNotFound(Exception):
     pass
 
+
 class CLI:
     """
     The CLI class it self, this will represent your cli.
@@ -137,7 +138,6 @@ class CLI:
     def add_shard(self, shard):
         shard = shard
         shard._inject()
-    
 
     def _load_extensions(self, spec, key: str):
         lib = importlib.util.module_from_spec(spec)
@@ -147,19 +147,19 @@ class CLI:
         except Exception as e:
             del sys.modules[key]
             raise e
-        
+
         try:
-            setup = getattr(lib, 'setup')
+            setup = getattr(lib, "setup")
         except Exception:
             del sys.modules[key]
             raise RuntimeError(key)
-        
+
         try:
             setup()
         except Exception as e:
             del sys.modules[key]
             raise e
-    
+
     def load_extension(self, name):
         spec = importlib.util.find_spec(name)
         if spec is None:

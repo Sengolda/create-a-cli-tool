@@ -11,6 +11,7 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.abspath(".."))
@@ -21,6 +22,9 @@ sys.path.insert(0, os.path.abspath(".."))
 project = "create-a-cli-tool"
 copyright = "2021-present, Sengolda"
 author = "Sengolda"
+
+with open('../cli/__init__.py') as f:
+    version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE).group(1)
 
 
 # -- General configuration ---------------------------------------------------

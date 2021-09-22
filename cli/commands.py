@@ -12,7 +12,7 @@ class Command:
         self.description = kwargs.pop("description", None) or self._func.__doc__
 
     @classmethod
-    def from_function(cls: Type[C], function: Callable[..., Any]) -> C:
+    def from_function(cls, function):
         return cls(func=function, name=function.__name__, description=function.__doc__)
 
 

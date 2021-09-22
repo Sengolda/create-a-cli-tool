@@ -1,5 +1,6 @@
-from setuptools import setup
 import re
+
+from setuptools import setup
 
 with open("cli/__init__.py", "r", encoding="utf-8") as f:
     version = re.search(

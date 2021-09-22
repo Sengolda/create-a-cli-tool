@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import inspect
-from ..cli import Command, CLI
+
+from ..cli import CLI, Command
 
 
 class Shard:

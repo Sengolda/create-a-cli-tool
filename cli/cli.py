@@ -128,7 +128,6 @@ class CLI:
     def show_help(self) -> None:
         for cmd in self.commands:
             print(f"{cmd.name} - {cmd.description}")
-    
 
     def add_shard(self, shard):
         shard = shard

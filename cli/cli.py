@@ -1,12 +1,17 @@
 from .commands import Command, CommandGroup as Group
 import inspect
 from typing import List, TypeVar, Optional
+import importlib.util
 
+import sys
 
 T = TypeVar("T")
 C = TypeVar("C", bound=Command)
 G = TypeVar("G", bound=Group)
 
+
+class ExtensionNotFound(Exception):
+    pass
 
 class CLI:
     """
@@ -132,3 +137,32 @@ class CLI:
     def add_shard(self, shard):
         shard = shard
         shard._inject()
+    
+
+    def _load_extensions(self, spec, key: str):
+        lib = importlib.util.module_from_spec(spec)
+        sys.modules[key] = lib
+        try:
+            spec.loader.exec_module(lib)
+        except Exception as e:
+            del sys.modules[key]
+            raise e
+        
+        try:
+            setup = getattr(lib, 'setup')
+        except Exception:
+            del sys.modules[key]
+            raise RuntimeError(key)
+        
+        try:
+            setup()
+        except Exception as e:
+            del sys.modules[key]
+            raise e
+    
+    def load_extension(self, name):
+        spec = importlib.util.find_spec(name)
+        if spec is None:
+            raise ExtensionNotFound(name)
+
+        self._load_extensions(spec, name)

@@ -18,4 +18,6 @@ Bug Fixes
 
 
 Changes (Adds and removals)
+~~~~~~~~~~
+
 - Added cli.ext.shard.Shard to sort commands in.

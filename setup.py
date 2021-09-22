@@ -16,7 +16,10 @@ if not version:
 extra_requires = {"docs": ["sphinx>=4.0.2", "furo"]}
 
 
-packages = ["cli"]
+packages = [
+    "cli",
+    "cli.ext"
+]
 
 
 args = dict(

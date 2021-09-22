@@ -4,6 +4,8 @@ from typing import List, Optional, TypeVar
 from .commands import Command
 from .commands import CommandGroup as Group
 
+from .errors import *
+
 T = TypeVar("T")
 C = TypeVar("C", bound=Command)
 G = TypeVar("G", bound=Group)
@@ -50,7 +52,7 @@ class CLI:
 
         def decorator(func: T) -> T:
             if inspect.iscoroutinefunction(func):
-                raise RuntimeError("Functions must not be coroutines.")
+                raise NoCorountines("Functions must not be coroutines.")
 
             if not name:
                 cmd: C = Command.from_function(func)
@@ -58,7 +60,11 @@ class CLI:
                 cmd: C = Command(name=name, func=func, description=description)
 
             if cmd.name.count(" ") > 0:
-                raise RuntimeError("Command cannot have spaces.")
+                raise NameHasSpaces("Command cannot have spaces.")
+            
+
+            if cmd in self.commands:
+                raise CommandAlreadyExists(f"The command named {cmd.name} already exists.")
 
             self.commands.append(cmd)
             return cmd

@@ -25,8 +25,8 @@ class CommandGroup(Command):
     def __iter__(self):
         return iter(self.children)
 
-    def command(self, name: str = None, description: str = None) -> T:
-        def decorator(func):
+    def command(self, name: str = None, description: str = None):
+        def decorator(func: T) -> T:
             if not name:
                 command: C = Command.from_function(func)
             else:

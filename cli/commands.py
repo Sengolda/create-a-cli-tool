@@ -1,8 +1,8 @@
-from typing import List, TypeVar
+from typing import List, TypeVar, Any, Type, Callable
 from .errors import CommandAlreadyExists
 
 T = TypeVar("T")
-
+C = TypeVar("C", bound="Command")
 
 class Command:
     def __init__(self, **kwargs):
@@ -11,11 +11,9 @@ class Command:
         self.description = kwargs.pop("description", None) or self._func.__doc__
 
     @classmethod
-    def from_function(cls, function):
+    def from_function(cls: Type[C], function: Callable[..., Any]) -> C:
         return cls(func=function, name=function.__name__, description=function.__doc__)
 
-
-C = TypeVar("C", bound=Command)
 
 
 class CommandGroup(Command):

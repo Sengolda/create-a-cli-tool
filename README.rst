@@ -18,8 +18,9 @@ Install
 Features
 ======================
 
--  Easy-to-use.
--  Comes with a default help command for your cli.
+-  Easy-To-Use
+-  Maintained CLI Tool Maker
+-  Built-In Help Command
 
 Quick Example
 ======================

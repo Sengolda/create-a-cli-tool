@@ -25,7 +25,7 @@ class Shard:
             if isinstance(command, (Command, Group))
         ]
 
-    def _inject(self) -> List[Union[Command, Group]]: # type: ignore
+    def _inject(self) -> List[Union[Command, Group]]:  # type: ignore
         for cmd in self.__shard_cli_commands__:
             self.commands.append(cmd)
             return self.commands

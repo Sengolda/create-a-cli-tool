@@ -32,7 +32,9 @@ class CLI:
         self.no_welcome_message = no_welcome_message
         self.command_not_found_message = command_not_found_message
 
-    def command(self, name: Optional[str] = None, description: Optional[str] = None):
+    def command(
+        self, name: Optional[str] = None, description: Optional[str] = None
+    ) -> Callable[[T], Command]:
         """
         Make a command for your cli.
 

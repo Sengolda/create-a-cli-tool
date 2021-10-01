@@ -7,9 +7,6 @@ from .commands import CommandGroup as Group
 from .errors import *
 
 
-class ExtensionNotFound(Exception):
-    pass
-
 
 class CLI:
     """
@@ -143,6 +140,7 @@ class CLI:
         for cmd in self.commands:
             if cmd.name == name:
                 self.commands.remove(cmd)
+                break
 
     def show_help(self) -> None:
         for cmd in self.commands:

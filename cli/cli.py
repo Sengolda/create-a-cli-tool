@@ -7,7 +7,6 @@ from .commands import CommandGroup as Group
 from .errors import *
 
 
-
 class CLI:
     """
     The CLI class it self, this will represent your cli.

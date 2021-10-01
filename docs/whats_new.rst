@@ -21,3 +21,10 @@ Changes (Adds and removals)
 ~~~~~~~~~~
 
 - Added cli.ext.shard.Shard to sort commands in.
+
+v0.2.5
+--------
+
+Bug Fixes
+~~~~~~~~~~
+- Fixed all type-hints.

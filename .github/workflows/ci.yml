@@ -1,0 +1,25 @@
+name: "CI"
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: Install & UpdateDependencies
+        run: |
+          pip install --upgrade pip wheel
+          pip install black mypy
+      
+      - name: Type Checker
+        run: |
+          mypy cli
+          black -S --check cli

@@ -17,7 +17,7 @@ class Shard:
 
     def __init__(self, cli: CLI):
         self.cli: CLI = cli
-        self.commands: List[Union[Command, Group]] = []
+        self.commands: List[Command, Group] = []
 
         self.__shard_cli_commands__ = [
             command
@@ -25,7 +25,7 @@ class Shard:
             if isinstance(command, (Command, Group))
         ]
 
-    def _inject(self) -> List[Union[Command, Group]]:
+    def _inject(self) -> List[Command, Group]: # type: ignore
         for cmd in self.__shard_cli_commands__:
             self.commands.append(cmd)
             return self.commands

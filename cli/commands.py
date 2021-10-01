@@ -19,17 +19,17 @@ class Command:
 class CommandGroup(Command):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.children: List[C] = []
+        self.children: List[Command] = []
 
     def __iter__(self):
         return iter(self.children)
 
     def command(self, name: str = None, description: str = None):
-        def decorator(func: T) -> T:
+        def decorator(func: T) -> Command:
             if not name:
-                command: C = Command.from_function(func)
+                command: Command = Command.from_function(func)
             else:
-                command: C = Command(name=name, func=func, description=description)
+                command: Command = Command(name=name, func=func, description=description)  # type: ignore
 
             if command.name.count(" ") > 0:
                 raise RuntimeError("Command names cannot have spaces.")

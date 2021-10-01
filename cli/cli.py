@@ -1,14 +1,10 @@
 import inspect
-from typing import List, Optional, Union, TypeVar
+from typing import List, Optional, Union, TypeVar, Callable
 
-from .commands import Command
+from .commands import Command, T
 from .commands import CommandGroup as Group
 
 from .errors import *
-
-T = TypeVar("T")
-C = TypeVar("C", bound=Command)
-G = TypeVar("G", bound=Group)
 
 
 class ExtensionNotFound(Exception):
@@ -34,7 +30,7 @@ class CLI:
         command_not_found_message="Command not found.",
     ):
         self.name = str(name)
-        self.commands: List[C] = [
+        self.commands: List[Command] = [
             Command(name="help", func=self.show_help, description="Shows this message.")
         ]
         self.no_welcome_message = no_welcome_message
@@ -50,14 +46,14 @@ class CLI:
         :type description: str
         """
 
-        def decorator(func: T) -> T:
+        def decorator(func: T) -> Command:
             if inspect.iscoroutinefunction(func):
                 raise NoCorountines("Functions must not be coroutines.")
 
             if not name:
-                cmd: C = Command.from_function(func)
+                cmd: Command = Command.from_function(func)
             else:
-                cmd: C = Command(name=name, func=func, description=description)
+                cmd: Command = Command(name=name, func=func, description=description)  # type: ignore
 
             if cmd.name.count(" ") > 0:
                 raise NameHasSpaces("Command cannot have spaces.")
@@ -72,7 +68,9 @@ class CLI:
 
         return decorator
 
-    def group(self, name: Optional[str] = None, description: Optional[str] = None):
+    def group(
+        self, name: Optional[str] = None, description: Optional[str] = None
+    ) -> Callable[[T], Group]:
         """
         Make a command group for your cli.
 
@@ -82,14 +80,14 @@ class CLI:
         :type description: str
         """
 
-        def decorator(func: T) -> T:
+        def decorator(func: T) -> Group:
             if inspect.iscoroutinefunction(func):
                 raise RuntimeError("Functions must not be coroutines.")
 
             if not name:
-                cmd: G = Group.from_function(func)
+                cmd: Group = Group.from_function(func)
             else:
-                cmd: G = Group(name=name, func=func, description=description)
+                cmd: Group = Group(name=name, func=func, description=description)  # type: ignore
 
             if cmd.name.count(" ") > 0:
                 raise NameHasSpaces("Command cannot have spaces.")
@@ -124,16 +122,16 @@ class CLI:
                 break
 
             elif len(args) == 2:
-                for subcmd in cmd:
+                for subcmd in cmd:  # pylint: disable=not-an-iterable
                     if subcmd.name == args[1]:
                         subcmd._func()
                         break
                 break
 
-    def get_command(self, name: str) -> Union[C, G]:
+    def get_command(self, name: str) -> Union[Group, Command]:  # type: ignore
         for command in self.commands:
             if command.name == name:
-                return command
+                return command  # type: ignore
 
     def remove_command(self, name: str):
         """

@@ -156,4 +156,6 @@ class CLI:
         :type shard: cli.ext.shard.Shard
         """
         shard = shard
-        shard._inject()
+        _shard_cmds = shard._inject()
+        for cmd in _shard_cmds:
+            self.commands.append(cmd)

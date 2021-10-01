@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+from typing import List, Union
+
 import inspect
 
-from ..cli import CLI, Command
+from ..cli import CLI, Command, Group
 
 
 class Shard:
@@ -14,14 +16,16 @@ class Shard:
     """
 
     def __init__(self, cli: CLI):
-        self.cli = cli
+        self.cli: CLI = cli
+        self.commands: List[Union[Command, Group]] = []
 
         self.__shard_cli_commands__ = [
             command
             for _, command in inspect.getmembers(self)
-            if isinstance(command, Command)
+            if isinstance(command, (Command, Group))
         ]
 
-    def _inject(self):
+    def _inject(self) -> List[Union[Command, Group]]:
         for cmd in self.__shard_cli_commands__:
-            self.cli.commands.append(cmd)
+            self.commands.append(cmd)
+            return self.commands

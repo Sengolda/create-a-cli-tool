@@ -161,7 +161,7 @@ class CLI:
 
         Parameters
         -----------
-        shard: :class:`cli.cli.ext`
+        shard: :class:`cli.cli.ext.shard.Shard`
             The shard you want to add
         """
         shard = shard

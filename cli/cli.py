@@ -44,7 +44,7 @@ class CLI:
         -----------
         name: :class:`str`
             The name of the command, Default to the name of your function.
-        :description: :class:`str`
+        description: :class:`str`
             The description of the command, Defaults to the function's doc.
         """
 

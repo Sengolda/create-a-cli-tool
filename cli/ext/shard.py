@@ -11,8 +11,10 @@ class Shard:
     """
     A class to sort commands in
 
-    :param cli: Your CLI class.
-    :type cli: cli.cli.CLI
+    Parameters
+    -----------
+    cli: :class:`cli.cli.CLI`
+        Your CLI class.
     """
 
     def __init__(self, cli: CLI):

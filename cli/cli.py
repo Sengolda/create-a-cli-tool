@@ -11,12 +11,14 @@ class CLI:
     """
     The CLI class it self, this will represent your cli.
 
-    :param name: The name of your CLI
-    :type name: str
-    :param no_welcome_message: Choose if you want to display a welcome message or not.
-    :type no_welcome_message: bool
-    :param command_not_found_message: Pick whatever error message you want to print out when a command is not found.
-    :type command_not_found_message: str
+    Parameters
+    -----------
+    name: :class:`str`
+        The name of your CLI
+    no_welcome_message: :class:`bool`
+        Choose if you want to display a welcome message or not.
+    command_not_found_message: :class:`str`
+        Pick whatever error message you want to print out when a command is not found.
     """
 
     def __init__(
@@ -38,10 +40,12 @@ class CLI:
         """
         Make a command for your cli.
 
-        :param name: The name of the command, Default to the name of your function.
-        :type name: str
-        :param description: The description of the command, Defaults to the function's doc.
-        :type description: str
+        Parameters
+        -----------
+        name: :class:`str`
+            The name of the command, Default to the name of your function.
+        :description: :class:`str`
+            The description of the command, Defaults to the function's doc.
         """
 
         def decorator(func: T) -> Command:
@@ -72,10 +76,12 @@ class CLI:
         """
         Make a command group for your cli.
 
-        :param name: The name of the group, Default to the name of your function.
-        :type name: str
-        :param description: The description of the group, Defaults to the function's doc.
-        :type description: str
+        Parameters
+        -----------
+        name: :class:`str`
+            The name of the group, Default to the name of your function.
+        description: :class:`str`
+            The description of the group, Defaults to the function's doc.
         """
 
         def decorator(func: T) -> Group:
@@ -135,8 +141,10 @@ class CLI:
         """
         Remove a command.
 
-        :param name: The name of the command.
-        :type name: str
+        Parameters
+        -----------
+        name: :class:`str`
+            The name of the command that you want to remove.
         """
         for cmd in self.commands:
             if cmd.name == name:
@@ -151,8 +159,10 @@ class CLI:
         """
         Add a shard to the cli.
 
-        :param shard: The shard class you want to add.
-        :type shard: cli.ext.shard.Shard
+        Parameters
+        -----------
+        shard: :class:`cli.cli.ext`
+            The shard you want to add
         """
         shard = shard
         _shard_cmds = shard._inject()

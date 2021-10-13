@@ -36,7 +36,7 @@ class CLI:
 
     def command(
         self, name: Optional[str] = None, description: Optional[str] = None
-    ) -> Callable[[T], Command]:
+    ) -> Callable[..., Any]:
         """
         Make a command for your cli.
 
@@ -68,7 +68,7 @@ class CLI:
             self.commands.append(cmd)
             return cmd
 
-        return decorator  # type: ignore
+        return decorator
 
     def group(
         self, name: Optional[str] = None, description: Optional[str] = None

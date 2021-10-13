@@ -1,4 +1,4 @@
-from typing import List, TypeVar, Any, Type, Callable
+from typing import List, Optional, TypeVar, Any, Type, Callable
 from .errors import CommandAlreadyExists
 
 T = TypeVar("T")
@@ -7,12 +7,14 @@ C = TypeVar("C", bound="Command")
 
 class Command:
     def __init__(self, **kwargs):
-        self.name = kwargs.pop("name", None) or str(self._func.__name__)
-        self._func = kwargs.pop("func")
-        self.description = kwargs.pop("description", None) or self._func.__doc__
+        self.name: str = kwargs.pop("name", None) or str(self._func.__name__)
+        self._func: Callable = kwargs.pop("func")
+        self.description: Optional[str] = (
+            kwargs.pop("description", None) or self._func.__doc__
+        )
 
     @classmethod
-    def from_function(cls, function):
+    def from_function(cls: Type[C], function: Callable[..., Any]) -> C:
         return cls(func=function, name=function.__name__, description=function.__doc__)
 
 
@@ -25,7 +27,7 @@ class CommandGroup(Command):
         return iter(self.children)
 
     def command(self, name: str = None, description: str = None):
-        def decorator(func: T) -> Command:
+        def decorator(func: Callable[..., Any]) -> Command:
             if not name:
                 command: Command = Command.from_function(func)
             else:

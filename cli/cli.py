@@ -1,5 +1,5 @@
 import inspect
-from typing import List, Optional, Union, TypeVar, Callable
+from typing import List, Optional, Union, TypeVar, Callable, Any
 
 from .commands import Command, T
 from .commands import CommandGroup as Group
@@ -48,7 +48,7 @@ class CLI:
             The description of the command, Defaults to the function's doc.
         """
 
-        def decorator(func: T) -> Command:
+        def decorator(func: Callable[..., Any]) -> Command:
             if inspect.iscoroutinefunction(func):
                 raise NoCorountines("Functions must not be coroutines.")
 
@@ -68,11 +68,11 @@ class CLI:
             self.commands.append(cmd)
             return cmd
 
-        return decorator
+        return decorator  # type: ignore
 
     def group(
         self, name: Optional[str] = None, description: Optional[str] = None
-    ) -> Callable[[T], Group]:
+    ) -> Callable[..., Any]:
         """
         Make a command group for your cli.
 
@@ -84,7 +84,7 @@ class CLI:
             The description of the group, Defaults to the function's doc.
         """
 
-        def decorator(func: T) -> Group:
+        def decorator(func: Callable[..., Any]) -> Group:
             if inspect.iscoroutinefunction(func):
                 raise RuntimeError("Functions must not be coroutines.")
 

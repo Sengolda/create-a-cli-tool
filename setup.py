@@ -13,7 +13,13 @@ with open("README.rst", "r", encoding="utf-8") as f:
 if not version:
     raise RuntimeError("version not set...")
 
-extra_requires = {"docs": ["sphinx>=4.0.2", "furo"]}
+extra_requires = {
+    "docs": 
+    [
+        "sphinx==4.0.2", 
+        "furo"
+    ]
+}
 
 
 packages = ["cli", "cli.ext"]

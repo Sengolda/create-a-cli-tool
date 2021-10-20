@@ -3,9 +3,7 @@ import re
 from setuptools import setup
 
 with open("cli/__init__.py", "r", encoding="utf-8") as f:
-    version = re.search(
-        r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE
-    ).group(1)
+    version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE).group(1)
 
 with open("README.rst", "r", encoding="utf-8") as f:
     long_description = f.read()
@@ -13,13 +11,7 @@ with open("README.rst", "r", encoding="utf-8") as f:
 if not version:
     raise RuntimeError("version not set...")
 
-extra_requires = {
-    "docs": 
-    [
-        "sphinx==4.0.2", 
-        "furo"
-    ]
-}
+extra_requires = {"docs": ["sphinx>=4.2.0", "furo"]}
 
 
 packages = ["cli", "cli.ext"]

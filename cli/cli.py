@@ -111,7 +111,7 @@ class CLI:
             if not self.no_welcome_message:
                 print("Welcome to " + self.name)
 
-            args: List[Optional[str]] = input(">>> ").split()
+            args: List[str] = input(">>> ").split()
             while len(args) > 0 and args[0] not in ("exit", "quit"):
                 cmd: Union[Group, Command] = self.get_command(args[0])
                 if not cmd:
@@ -123,7 +123,7 @@ class CLI:
                     break
 
                 elif len(args) == 2:
-                    for subcmd in cmd:  # pylint: disable=not-an-iterable
+                    for subcmd in cmd:  # type: ignore
                         if subcmd.name == args[1]:
                             subcmd._func()
                             break
@@ -138,7 +138,7 @@ class CLI:
             if type(cmd) == Command or len(sys.argv) == 2:
                 cmd._func()
             else:
-                for subcmd in cmd:
+                for subcmd in cmd: # type: ignore
                     if subcmd.name == sys.argv[2]:
                         subcmd._func()
                         break

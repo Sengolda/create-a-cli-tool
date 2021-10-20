@@ -49,5 +49,6 @@ body:
         - 0.2.6
         - 0.3.3
         - 0.3.4
+        - 0.3.5 (Latest)
     validations:
       required: true

@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.abspath(".."))
 # -- Project information -----------------------------------------------------
 
 project = "create-a-cli-tool"
-copyright = "2021-present, Sengolda"
+copyright = "2021, Sengolda"
 author = "Sengolda"
 
 

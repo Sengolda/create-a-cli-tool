@@ -138,7 +138,7 @@ class CLI:
             if type(cmd) == Command or len(sys.argv) == 2:
                 cmd._func()
             else:
-                for subcmd in cmd: # type: ignore
+                for subcmd in cmd:  # type: ignore
                     if subcmd.name == sys.argv[2]:
                         subcmd._func()
                         break

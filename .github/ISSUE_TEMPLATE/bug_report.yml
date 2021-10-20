@@ -22,6 +22,20 @@ body:
       value: "A bug happened!"
     validations:
       required: true
+  - type: textarea
+    id: Code
+    attributes:
+      label: Your Code
+      description: Put the code that you wrote here.
+    validations:
+      required: true
+  - type: input:
+    id: Python-version
+    attributes:
+      label: Python version
+      description: Your python version
+    validations:
+      required: true
   - type: dropdown
     id: version
     attributes:

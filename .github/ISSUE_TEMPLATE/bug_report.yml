@@ -30,7 +30,9 @@ body:
       options:
         - 0.1.0
         - 0.1.1
-        - 0.1.2 (Latest)
-        - 0.2.0 (alpha-release)
+        - 0.1.2
+        - 0.2.5
+        - 0.2.6
+        - 0.3.3 (Latest)
     validations:
       required: true

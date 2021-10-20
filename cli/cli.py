@@ -1,9 +1,10 @@
 import inspect
-from typing import List, Optional, Union, TypeVar, Callable, Any
+import sys
+from typing import Any, Callable, List, Optional, TypeVar, Union
 
-from .commands import Command, T
+from .commands import Command
 from .commands import CommandGroup as Group
-
+from .commands import T
 from .errors import *
 
 
@@ -28,15 +29,11 @@ class CLI:
         command_not_found_message="Command not found.",
     ):
         self.name = str(name)
-        self.commands: List[Command] = [
-            Command(name="help", func=self.show_help, description="Shows this message.")
-        ]
+        self.commands: List[Command] = [Command(name="help", func=self.show_help, description="Shows this message.")]
         self.no_welcome_message = no_welcome_message
         self.command_not_found_message = command_not_found_message
 
-    def command(
-        self, name: Optional[str] = None, description: Optional[str] = None
-    ) -> Callable[..., Any]:
+    def command(self, name: Optional[str] = None, description: Optional[str] = None) -> Callable[..., Any]:
         """
         Make a command for your cli.
 
@@ -61,18 +58,14 @@ class CLI:
                 raise NameHasSpaces("Command cannot have spaces.")
 
             if cmd in self.commands:
-                raise CommandAlreadyExists(
-                    f"The command named {cmd.name} already exists."
-                )
+                raise CommandAlreadyExists(f"The command named {cmd.name} already exists.")
 
             self.commands.append(cmd)
             return cmd
 
         return decorator
 
-    def group(
-        self, name: Optional[str] = None, description: Optional[str] = None
-    ) -> Callable[..., Any]:
+    def group(self, name: Optional[str] = None, description: Optional[str] = None) -> Callable[..., Any]:
         """
         Make a command group for your cli.
 
@@ -97,40 +90,58 @@ class CLI:
                 raise NameHasSpaces("Command cannot have spaces.")
 
             if cmd in self.commands:
-                raise CommandAlreadyExists(
-                    f"The group named {cmd.name} already exists."
-                )
+                raise CommandAlreadyExists(f"The group named {cmd.name} already exists.")
 
             self.commands.append(cmd)
             return cmd
 
         return decorator
 
-    def run(self):
+    def run(self, interactive: bool = True):
         """
         Run your cli.
+
+        Parameters
+        -----------
+        interactive: :class:`bool`
+            Pick if the cli should be interactive or not, if set to false you will do like ``python3 main.py command_name``.
         """
 
-        if not self.no_welcome_message:
-            print("Welcome to " + self.name)
+        if interactive:
+            if not self.no_welcome_message:
+                print("Welcome to " + self.name)
 
-        args = input(">>> ").split()
-        while len(args) > 0 and args[0] not in ("exit", "quit"):
-            cmd = self.get_command(args[0])
+            args: List[Optional[str]] = input(">>> ").split()
+            while len(args) > 0 and args[0] not in ("exit", "quit"):
+                cmd: Union[Group, Command] = self.get_command(args[0])
+                if not cmd:
+                    print(self.command_not_found_message)
+                    return
+
+                elif isinstance(cmd, Command) and len(args) == 1:
+                    cmd._func()
+                    break
+
+                elif len(args) == 2:
+                    for subcmd in cmd:  # pylint: disable=not-an-iterable
+                        if subcmd.name == args[1]:
+                            subcmd._func()
+                            break
+                    break
+
+        else:
+            cmd = self.get_command(sys.argv[1])  # type: ignore
             if not cmd:
                 print(self.command_not_found_message)
                 return
 
-            elif isinstance(cmd, Command) and len(args) == 1:
+            if type(cmd) == Command or len(sys.argv) == 2:
                 cmd._func()
-                break
-
-            elif len(args) == 2:
-                for subcmd in cmd:  # pylint: disable=not-an-iterable
-                    if subcmd.name == args[1]:
+            else:
+                for subcmd in cmd:
+                    if subcmd.name == sys.argv[2]:
                         subcmd._func()
                         break
-                break
 
     def get_command(self, name: str) -> Union[Group, Command]:  # type: ignore
         for command in self.commands:

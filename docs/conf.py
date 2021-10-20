@@ -44,7 +44,8 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.napoleon",
 ]
-
+autodoc_member_order = "bysource"
+autodoc_typehints = "none"
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -54,8 +55,12 @@ templates_path = ["_templates"]
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
+# The name of the Pygments (syntax highlighting) style to use.
+pygments_style = "friendly"
 
 # -- Options for HTML output -------------------------------------------------
+
+html_experimental_html5_writer = True
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.

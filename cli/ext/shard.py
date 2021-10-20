@@ -1,8 +1,7 @@
 from __future__ import annotations
 
-from typing import List, Union
-
 import inspect
+from typing import List, Union
 
 from ..cli import CLI, Command, Group
 
@@ -22,9 +21,7 @@ class Shard:
         self.commands: List[Union[Command, Group]] = []
 
         self.__shard_cli_commands__ = [
-            command
-            for _, command in inspect.getmembers(self)
-            if isinstance(command, (Command, Group))
+            command for _, command in inspect.getmembers(self) if isinstance(command, (Command, Group))
         ]
 
     def _inject(self) -> List[Union[Command, Group]]:  # type: ignore

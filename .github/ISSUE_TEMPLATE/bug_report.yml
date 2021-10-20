@@ -29,7 +29,7 @@ body:
       description: Put the code that you wrote here.
     validations:
       required: true
-  - type: input:
+  - type: input
     id: Python-version
     attributes:
       label: Python version

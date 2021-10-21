@@ -160,7 +160,7 @@ class CLI:
                         subcmd._func()
                         break
 
-    def get_command(self, name: str) -> Optional[Union[Group, Command]]:  # type: ignore
+    def get_command(self, name: str) -> Union[Group, Command]:  # type: ignore
         for command in self.commands:
             if command.name == name:
                 return command  # type: ignore

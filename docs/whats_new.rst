@@ -28,3 +28,27 @@ v0.2.5
 Bug Fixes
 ~~~~~~~~~~
 - Fixed all type-hints.
+
+v0.3.3
+--------
+
+Changes (Adds and removals)
+~~~~~~~~~~
+- Typed 97% of the whole lib.
+
+v0.3.3
+--------
+
+v0.3.5
+--------
+
+Changes (Adds and removals)
+~~~~~~~~~~
+- Typed the whole lib.
+
+v0.3.8
+--------
+
+Changes (Adds and removals)
+~~~~~~~~~~
+- Added command and group aliases.

@@ -54,6 +54,9 @@ class CLI:
             The name of the command, Default to the name of your function.
         description: :class:`str`
             The description of the command, Defaults to the function's doc.
+        
+        aliases: :class:`List[str]`
+            A list of strings that contains the name of the aliases you want.
         """
 
         def decorator(func: Callable[..., Any]) -> Command:
@@ -91,6 +94,9 @@ class CLI:
             The name of the group, Default to the name of your function.
         description: :class:`str`
             The description of the group, Defaults to the function's doc.
+        
+        aliases: :class:`List[str]`
+            A list of strings that contains the name of the aliases you want.
         """
 
         def decorator(func: Callable[..., Any]) -> Group:

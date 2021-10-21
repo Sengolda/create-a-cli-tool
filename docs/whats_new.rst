@@ -36,9 +36,6 @@ Changes (Adds and removals)
 ~~~~~~~~~~
 - Typed 97% of the whole lib.
 
-v0.3.3
---------
-
 v0.3.5
 --------
 

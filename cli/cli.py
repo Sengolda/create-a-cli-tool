@@ -79,7 +79,9 @@ class CLI:
 
         return decorator
 
-    def group(self, name: Optional[str] = None, description: Optional[str] = None, aliases: List[Optional[Group]] = []) -> Callable[..., Any]:
+    def group(
+        self, name: Optional[str] = None, description: Optional[str] = None, aliases: List[Optional[Group]] = []
+    ) -> Callable[..., Any]:
         """
         Make a command group for your cli.
 

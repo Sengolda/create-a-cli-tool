@@ -25,7 +25,9 @@ class CommandGroup(Command):
     def __iter__(self) -> Iterator:
         return iter(self.children)
 
-    def command(self, name: str = None, description: str = None, aliases: List[Optional[Command]] = []) -> Callable[..., Any]:
+    def command(
+        self, name: str = None, description: str = None, aliases: List[Optional[Command]] = []
+    ) -> Callable[..., Any]:
         def decorator(func: Callable[..., Any]) -> Command:
             if not name:
                 command: Command = Command.from_function(func)
@@ -46,7 +48,7 @@ class CommandGroup(Command):
 
         return decorator
 
-    def get_subcommand(self, name: str) -> Optional[Command]: # type: ignore
+    def get_subcommand(self, name: str) -> Optional[Command]:  # type: ignore
         for command in self.children:
             if command.name == name:
                 return command

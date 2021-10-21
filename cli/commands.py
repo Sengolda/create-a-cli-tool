@@ -1,4 +1,4 @@
-from typing import Any, Callable, List, Optional, Type, TypeVar
+from typing import Any, Callable, List, Optional, Type, TypeVar, Iterator
 
 from .errors import CommandAlreadyExists
 
@@ -22,10 +22,10 @@ class CommandGroup(Command):
         super().__init__(**kwargs)
         self.children: List[Command] = []
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator:
         return iter(self.children)
 
-    def command(self, name: str = None, description: str = None) -> Callable[..., Any]:
+    def command(self, name: str = None, description: str = None, aliases: List[Optional[Command]] = []) -> Callable[..., Any]:
         def decorator(func: Callable[..., Any]) -> Command:
             if not name:
                 command: Command = Command.from_function(func)
@@ -39,11 +39,14 @@ class CommandGroup(Command):
                 raise CommandAlreadyExists(f"A command named {command.name} is already in {self.name} group.")
 
             self.children.append(command)
+            if aliases:
+                for alias in aliases:
+                    self.children.append(Command(name=alias, func=func, description=description))
             return command
 
         return decorator
 
-    def get_subcommand(self, name: str):
+    def get_subcommand(self, name: str) -> Optional[Command]: # type: ignore
         for command in self.children:
             if command.name == name:
                 return command

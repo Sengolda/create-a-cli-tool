@@ -1,4 +1,4 @@
-import inspect
+import asyncio
 import sys
 from typing import Any, Callable, List, Optional, TypeVar, Union
 
@@ -29,11 +29,22 @@ class CLI:
         command_not_found_message="Command not found.",
     ):
         self.name = str(name)
-        self.commands: List[Command] = [Command(name="help", func=self.show_help, description="Shows this message.")]
+        self.commands: List[Command] = [
+            Command(
+                name="help",
+                func=self.show_help,
+                description="Shows this message.",
+            )
+        ]
         self.no_welcome_message = no_welcome_message
         self.command_not_found_message = command_not_found_message
 
-    def command(self, name: Optional[str] = None, description: Optional[str] = None) -> Callable[..., Any]:
+    def command(
+        self,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        aliases: List[Optional[Command]] = [],
+    ) -> Callable[..., Any]:
         """
         Make a command for your cli.
 
@@ -46,7 +57,7 @@ class CLI:
         """
 
         def decorator(func: Callable[..., Any]) -> Command:
-            if inspect.iscoroutinefunction(func):
+            if asyncio.iscoroutinefunction(func):
                 raise NoCorountines("Functions must not be coroutines.")
 
             if not name:
@@ -61,11 +72,14 @@ class CLI:
                 raise CommandAlreadyExists(f"The command named {cmd.name} already exists.")
 
             self.commands.append(cmd)
+            if aliases:
+                for alias in aliases:
+                    self.commands.append(Command(name=alias, func=func, description=description))
             return cmd
 
         return decorator
 
-    def group(self, name: Optional[str] = None, description: Optional[str] = None) -> Callable[..., Any]:
+    def group(self, name: Optional[str] = None, description: Optional[str] = None, aliases: List[Optional[Group]] = []) -> Callable[..., Any]:
         """
         Make a command group for your cli.
 
@@ -78,7 +92,7 @@ class CLI:
         """
 
         def decorator(func: Callable[..., Any]) -> Group:
-            if inspect.iscoroutinefunction(func):
+            if asyncio.iscoroutinefunction(func):
                 raise RuntimeError("Functions must not be coroutines.")
 
             if not name:
@@ -93,6 +107,9 @@ class CLI:
                 raise CommandAlreadyExists(f"The group named {cmd.name} already exists.")
 
             self.commands.append(cmd)
+            if aliases:
+                for alias in aliases:
+                    self.commands.append(Group(name=alias, func=func, description=description))
             return cmd
 
         return decorator
@@ -143,12 +160,12 @@ class CLI:
                         subcmd._func()
                         break
 
-    def get_command(self, name: str) -> Union[Group, Command]:  # type: ignore
+    def get_command(self, name: str) -> Optional[Union[Group, Command]]:  # type: ignore
         for command in self.commands:
             if command.name == name:
                 return command  # type: ignore
 
-    def remove_command(self, name: str):
+    def remove_command(self, name: str) -> None:
         """
         Remove a command.
 

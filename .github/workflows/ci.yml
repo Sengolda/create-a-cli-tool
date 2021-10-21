@@ -3,7 +3,7 @@ name: "CI"
 on: [push, pull_request]
 
 jobs:
-  lint:
+  job:
     runs-on: ubuntu-latest
 
     steps:
@@ -11,16 +11,42 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup Python
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v2
         with:
           python-version: 3.8
 
       - name: Install & Update Dependencies
         run: |
           pip install --upgrade pip wheel
-          pip install black mypy
+          pip install black mypy twine codespell
       
-      - name: Type Checker
+      - name: Run black-mypy-codespell
         run: |
           mypy cli
           black -S --check cli -l 120
+          codespell cli
+      
+      - name: Run twine checker
+        run: |
+          rm -rf dist/*
+          python3 setup.py sdist
+          twine check dist/*
+  
+  test:
+    strategy:
+      matrix:
+        os: ['macos-latest', 'windows-latest', 'ubuntu-latest']
+        pyver: ['3.6', '3.7', '3.8', '3.9', '3.10']
+    steps:
+      runs-on: ${{ matrix.os }}
+      timeout-minutes: 5
+      - name: checkout
+        uses: actions/checkout@v2
+    
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.pyver }}
+      
+      - name: Install
+        run: python3 setup.py install

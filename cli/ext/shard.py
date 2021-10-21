@@ -20,7 +20,7 @@ class Shard:
         self.cli: CLI = cli
         self.commands: List[Union[Command, Group]] = []
 
-        self.__shard_cli_commands__ = [
+        self.__shard_cli_commands__: List[Union[Command, Group]] = [
             command for _, command in inspect.getmembers(self) if isinstance(command, (Command, Group))
         ]
 

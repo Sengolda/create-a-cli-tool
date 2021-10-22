@@ -49,3 +49,10 @@ v0.3.8
 Changes (Adds and removals)
 ~~~~~~~~~~
 - Added command and group aliases.
+
+v0.4.0
+--------
+
+Changes (Adds and removals)
+~~~~~~~~~~
+- infinite interactive sessions.

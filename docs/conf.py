@@ -38,7 +38,6 @@ release = str(version)
 # ones.
 
 extensions = [
-    "furo",
     "sphinx.ext.autodoc",
     "sphinx.ext.extlinks",
     "sphinx.ext.intersphinx",
@@ -56,7 +55,7 @@ templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = "friendly"
+pygments_style = "sphinx"
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -65,7 +64,12 @@ html_experimental_html5_writer = True
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "furo"
+html_theme = "sphinx_rtd_theme"
+
+# Project title
+html_title = "{} - {}".format("create-a-cli-tool", str(version))
+
+
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

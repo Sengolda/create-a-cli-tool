@@ -12,20 +12,20 @@ Welcome to create-a-cli-tool 👋
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Install
-======================
+====================================
 
 .. code:: sh
 
     pip install -U create-a-cli-tool
 
 Features
-======================
+============================================
 
 -  Easy-to-use.
 -  Comes with a default help command for your cli.
 
 Quick Example
-======================
+==========================================
 
 .. code:: py
 
@@ -40,14 +40,14 @@ Quick Example
     my_cli.run()
 
 Author
-======================
+============================================
 
 👤 **Sengolda**
 
 *  Github: `@Sengolda <https://github.com/Sengolda/create-a-cli-tool/issues>`_
 
 🤝 Contributing
-======================
+============================================
 
 Contributions, issues and feature requests are welcome!
 
@@ -55,7 +55,7 @@ Feel free to check `issues
 page <https://github.com/Sengolda/create-a-cli-tool/issues>`__.
 
 Show your support
-======================
+======================================
 
 
 Give a ⭐️ if this project helped you!

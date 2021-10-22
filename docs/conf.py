@@ -62,6 +62,8 @@ pygments_style = "friendly"
 
 html_experimental_html5_writer = True
 
+htmlhelp_basename = "cli.pydoc"
+
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #

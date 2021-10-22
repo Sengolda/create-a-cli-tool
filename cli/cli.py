@@ -136,23 +136,22 @@ class CLI:
             if not self.no_welcome_message:
                 print("Welcome to " + self.name)
 
-            args: List[str] = input(">>> ").split()
+            args = input(">>> ").split()
             while len(args) > 0 and args[0] not in ("exit", "quit"):
-                cmd: Union[Group, Command] = self.get_command(args[0])
+                cmd = self.get_command(args[0])
                 if not cmd:
                     print(self.command_not_found_message)
-                    return
+                    args = input(">>> ").split()
 
                 elif isinstance(cmd, Command) and len(args) == 1:
                     cmd._func()
-                    break
+                    args = input(">>> ").split()
 
                 elif len(args) == 2:
-                    for subcmd in cmd:  # type: ignore
+                    for subcmd in cmd.children:  # type: ignore
                         if subcmd.name == args[1]:
                             subcmd._func()
-                            break
-                    break
+                            args: List[str] = input(">>> ").split()
 
         else:
             cmd = self.get_command(sys.argv[1])  # type: ignore

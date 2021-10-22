@@ -145,13 +145,13 @@ class CLI:
 
                 elif isinstance(cmd, Command) and len(args) == 1:
                     cmd._func()
-                    args: List[str] = input(">>> ").split() # type: ignore
+                    args: List[str] = input(">>> ").split()  # type: ignore
 
                 elif len(args) == 2:
                     for subcmd in cmd.children:  # type: ignore
                         if subcmd.name == args[1]:
                             subcmd._func()
-                            args: List[str] = input(">>> ").split() # type: ignore
+                            args: List[str] = input(">>> ").split()  # type: ignore
 
         else:
             cmd = self.get_command(sys.argv[1])  # type: ignore

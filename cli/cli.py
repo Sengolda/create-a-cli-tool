@@ -137,7 +137,7 @@ class CLI:
                 print("Welcome to " + self.name)
 
             args: List[str] = input(">>> ").split()
-            while len(args) > 0 and args[0] not in ("exit", "quit"):
+            while args and args[0] not in ("exit", "quit"):
                 cmd = self.get_command(args[0])
                 if not cmd:
                     print(self.command_not_found_message)

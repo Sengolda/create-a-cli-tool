@@ -1,10 +1,9 @@
 import asyncio
 import sys
-from typing import Any, Callable, List, Optional, TypeVar, Union
+from typing import Any, Callable, List, Optional, Union
 
 from .commands import Command
 from .commands import CommandGroup as Group
-from .commands import T
 from .errors import *
 
 

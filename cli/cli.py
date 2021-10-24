@@ -121,7 +121,10 @@ class CLI:
 
         return decorator
 
-    def run(self, interactive: bool = True):
+    def run(
+        self,
+        interactive: bool = True,
+    ):
         """
         Run your cli.
 
@@ -142,14 +145,27 @@ class CLI:
                     print(self.command_not_found_message)
                     args = input(">>> ").split()
 
-                elif isinstance(cmd, Command) and len(args) == 1:
-                    cmd._func()
+                elif type(cmd) == Command:
+                    print(type(cmd))
+                    try:
+                        cmd._func(*args[1:])
+                    except TypeError as e:
+                        cmd._func()
                     args: List[str] = input(">>> ").split()  # type: ignore
 
-                elif len(args) == 2:
+                elif type(cmd) == Group:
                     for subcmd in cmd.children:  # type: ignore
-                        if subcmd.name == args[1]:
-                            subcmd._func()
+                        if subcmd.name == args[0]:
+                            try:
+                                subcmd._func(*args[2:])
+                            except TypeError as e:
+                                print(e)
+                            args: List[str] = input(">>> ").split()  # type: ignore
+                        else:
+                            try:
+                                cmd._func(*args[1:])
+                            except TypeError:
+                                cmd._func()
                             args: List[str] = input(">>> ").split()  # type: ignore
 
         else:
@@ -158,13 +174,24 @@ class CLI:
                 print(self.command_not_found_message)
                 return
 
-            if type(cmd) == Command or len(sys.argv) == 2:
-                cmd._func()
+            if type(cmd) == Command:
+                try:
+                    cmd._func(*sys.argv[2:])
+                except TypeError:
+                    cmd._func()
             else:
                 for subcmd in cmd:  # type: ignore
                     if subcmd.name == sys.argv[2]:
-                        subcmd._func()
+                        try:
+                            subcmd._func(*sys.argv[2:])
+                        except TypeError:
+                            subcmd._func()
                         break
+                    else:
+                        try:
+                            cmd._func(*sys.argv[1:])
+                        except TypeError:
+                            cmd._func()
 
     def get_command(self, name: str) -> Union[Group, Command]:  # type: ignore
         for command in self.commands:

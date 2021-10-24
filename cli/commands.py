@@ -41,7 +41,6 @@ class CommandGroup(Command):
                 raise CommandAlreadyExists(f"A command named {command.name} is already in {self.name} group.")
 
             self.children.append(command)
-            print(self.children)
             if aliases:
                 for alias in aliases:
                     self.children.append(Command(name=alias, func=func, description=description))

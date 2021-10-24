@@ -23,11 +23,11 @@ class CLI:
 
     def __init__(
         self,
-        name,
+        name: str,
         no_welcome_message: bool = False,
-        command_not_found_message="Command not found.",
-    ):
-        self.name = str(name)
+        command_not_found_message: str = "Command not found.",
+    ) -> None:
+        self.name: str = str(name)
         self.commands: List[Command] = [
             Command(
                 name="help",
@@ -35,8 +35,8 @@ class CLI:
                 description="Shows this message.",
             )
         ]
-        self.no_welcome_message = no_welcome_message
-        self.command_not_found_message = command_not_found_message
+        self.no_welcome_message: str = no_welcome_message
+        self.command_not_found_message: str = command_not_found_message
 
     def command(
         self,
@@ -124,7 +124,7 @@ class CLI:
     def run(
         self,
         interactive: bool = True,
-    ):
+    ) -> None:
         """
         Run your cli.
 

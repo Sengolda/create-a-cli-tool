@@ -1,16 +1,6 @@
-from typing import (
-    Any,
-    Callable,
-    List,
-    Optional,
-    Type,
-    TypeVar,
-    Iterator,
-)
+from typing import Any, Callable, Iterator, List, Optional, Type, TypeVar
 
-from .errors import (
-    CommandAlreadyExists,
-)
+from .errors import CommandAlreadyExists
 
 T = TypeVar("T")
 C = TypeVar(

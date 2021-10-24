@@ -1,14 +1,7 @@
 import inspect
-from typing import (
-    List,
-    Union,
-)
+from typing import List, Union
 
-from ..cli import (
-    CLI,
-    Command,
-    Group,
-)
+from ..cli import CLI, Command, Group
 
 
 class Shard:

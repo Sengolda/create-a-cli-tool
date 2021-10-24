@@ -1,9 +1,19 @@
 import asyncio
 import sys
-from typing import Any, Callable, List, Optional, Union
+from typing import (
+    Any,
+    Callable,
+    List,
+    Optional,
+    Union,
+)
 
-from .commands import Command
-from .commands import CommandGroup as Group
+from .commands import (
+    Command,
+)
+from .commands import (
+    CommandGroup as Group,
+)
 from .errors import *
 
 
@@ -35,7 +45,7 @@ class CLI:
                 description="Shows this message.",
             )
         ]
-        self.no_welcome_message: str = no_welcome_message
+        self.no_welcome_message: bool = no_welcome_message
         self.command_not_found_message: str = command_not_found_message
 
     def command(
@@ -43,7 +53,7 @@ class CLI:
         name: Optional[str] = None,
         description: Optional[str] = None,
         aliases: List[Optional[Command]] = [],
-    ) -> Callable[..., Any]:
+    ) -> Callable[..., Any,]:
         """
         Make a command for your cli.
 
@@ -58,7 +68,12 @@ class CLI:
             A list of strings that contains the name of the aliases you want.
         """
 
-        def decorator(func: Callable[..., Any]) -> Command:
+        def decorator(
+            func: Callable[
+                ...,
+                Any,
+            ]
+        ) -> Command:
             if asyncio.iscoroutinefunction(func):
                 raise NoCorountines("Functions must not be coroutines.")
 
@@ -76,14 +91,23 @@ class CLI:
             self.commands.append(cmd)
             if aliases:
                 for alias in aliases:
-                    self.commands.append(Command(name=alias, func=func, description=description))
+                    self.commands.append(
+                        Command(
+                            name=alias,
+                            func=func,
+                            description=description,
+                        )
+                    )
             return cmd
 
         return decorator
 
     def group(
-        self, name: Optional[str] = None, description: Optional[str] = None, aliases: List[Optional[Group]] = []
-    ) -> Callable[..., Any]:
+        self,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        aliases: List[Optional[Group]] = [],
+    ) -> Callable[..., Any,]:
         """
         Make a command group for your cli.
 
@@ -98,7 +122,12 @@ class CLI:
             A list of strings that contains the name of the aliases you want.
         """
 
-        def decorator(func: Callable[..., Any]) -> Group:
+        def decorator(
+            func: Callable[
+                ...,
+                Any,
+            ]
+        ) -> Group:
             if asyncio.iscoroutinefunction(func):
                 raise RuntimeError("Functions must not be coroutines.")
 
@@ -116,7 +145,13 @@ class CLI:
             self.commands.append(cmd)
             if aliases:
                 for alias in aliases:
-                    self.commands.append(Group(name=alias, func=func, description=description))
+                    self.commands.append(
+                        Group(
+                            name=alias,
+                            func=func,
+                            description=description,
+                        )
+                    )
             return cmd
 
         return decorator
@@ -139,7 +174,10 @@ class CLI:
                 print("Welcome to " + self.name)
 
             args: List[str] = input(">>> ").split()
-            while args and args[0] not in ("exit", "quit"):
+            while args and args[0] not in (
+                "exit",
+                "quit",
+            ):
                 cmd = self.get_command(args[0])
                 if not cmd:
                     print(self.command_not_found_message)
@@ -198,7 +236,10 @@ class CLI:
             if command.name == name:
                 return command  # type: ignore
 
-    def remove_command(self, name: str) -> None:
+    def remove_command(
+        self,
+        name: str,
+    ) -> None:
         """
         Remove a command.
 
@@ -212,11 +253,16 @@ class CLI:
                 self.commands.remove(cmd)
                 break
 
-    def show_help(self) -> None:
+    def show_help(
+        self,
+    ) -> None:
         for cmd in self.commands:
             print(f"{cmd.name} - {cmd.description}")
 
-    def add_shard(self, shard):
+    def add_shard(
+        self,
+        shard,
+    ):
         """
         Add a shard to the cli.
 

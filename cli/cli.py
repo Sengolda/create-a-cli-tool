@@ -174,7 +174,6 @@ class CLI:
                     args = input(">>> ").split()
 
                 elif type(cmd) == Command:
-                    print(type(cmd))
                     try:
                         cmd._func(*args[1:])
                     except TypeError as e:

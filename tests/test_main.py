@@ -1,4 +1,3 @@
-
 import pytest
 
 from cli import CLI, Command

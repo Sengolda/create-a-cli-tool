@@ -1,10 +1,15 @@
+from __future__ import annotations
+
 import asyncio
 import sys
-from typing import Any, Callable, List, Optional, Union
+from typing import TYPE_CHECKING
 
 from .commands import Command
 from .commands import CommandGroup as Group
 from .errors import *
+
+if TYPE_CHECKING:
+    from typing import Any, Callable, List, Optional, Union
 
 
 class CLI:

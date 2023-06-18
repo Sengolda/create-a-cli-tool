@@ -1,12 +1,17 @@
-from typing import Any, Callable, Iterator, List, Optional, Type, TypeVar
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from .errors import CommandAlreadyExists
 
-T = TypeVar("T")
-C = TypeVar(
-    "C",
-    bound="Command",
-)
+if TYPE_CHECKING:
+    from typing import Any, Callable, Iterator, List, Optional, Type, TypeVar
+
+    T = TypeVar("T")
+    C = TypeVar(
+        "C",
+        bound="Command",
+    )
 
 
 class Command:
@@ -14,13 +19,10 @@ class Command:
         self,
         **kwargs: Any,
     ) -> None:
-        self.name: str = (
-            kwargs.pop(
-                "name",
-                None,
-            )
-            or str(self._func.__name__)
-        )
+        self.name: str = kwargs.pop(
+            "name",
+            None,
+        ) or str(self._func.__name__)
         self._func: Callable = kwargs.pop("func")
         self.description: Optional[str] = (
             kwargs.pop(

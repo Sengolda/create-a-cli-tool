@@ -68,8 +68,8 @@ class CommandGroup(Command):
 
     def command(
         self,
-        name: str = None,
-        description: str = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
         aliases: List[Optional[Command]] = [],
     ) -> Callable[..., Any,]:
         def decorator(

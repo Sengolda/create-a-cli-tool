@@ -1,3 +1,9 @@
+__all__ = (
+    "CommandAlreadyExists",
+    "NameHasSpaces",
+    "NoCorountines",
+)
+
 class CommandAlreadyExists(BaseException):
     """Raised when multiple commands have the same name."""
 

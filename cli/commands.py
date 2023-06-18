@@ -14,6 +14,12 @@ if TYPE_CHECKING:
     )
 
 
+__all__ = (
+    "Command",
+    "CommandGroup",
+)
+
+
 class Command:
     def __init__(
         self,

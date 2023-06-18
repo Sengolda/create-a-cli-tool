@@ -11,6 +11,7 @@ from .errors import *
 if TYPE_CHECKING:
     from typing import Any, Callable, List, Optional, Union
 
+__all__ = ("CLI", )
 
 class CLI:
     """
@@ -181,7 +182,7 @@ class CLI:
                 elif type(cmd) == Command:
                     try:
                         cmd._func(*args[1:])
-                    except TypeError as e:
+                    except TypeError:
                         cmd._func()
                     args: List[str] = input(">>> ").split()  # type: ignore
 

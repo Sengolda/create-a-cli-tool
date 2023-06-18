@@ -18,12 +18,13 @@ jobs:
       - name: Install & Update Dependencies
         run: |
           pip install --upgrade pip wheel
-          pip install black mypy twine codespell
+          pip install black isort mypy twine codespell
       
-      - name: Run black-mypy-codespell
+      - name: Run black-mypy-codespell-isort
         run: |
           mypy cli
-          black -S --check cli -l 120
+          black --check cli/ tests/
+          isort cli/ tests/
           codespell cli
       
       - name: Run twine checker
@@ -35,17 +36,17 @@ jobs:
   test:
     strategy:
       matrix:
-        os: ['macos-latest', 'windows-latest', 'ubuntu-latest']
-        pyver: ['3.6', '3.7', '3.8', '3.9', '3.10']
+        os: ['windows-latest', 'ubuntu-latest']
+        pyver: ['3.6', '3.7', '3.8', '3.9', '3.10', '3.11']
     runs-on: ${{ matrix.os }}
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
     
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.pyver }}
       
-      - name: Install
-        run: python3 setup.py install
+      - name: Install and run tox
+        run: pip install -e . && pip install -U tox tox-gh

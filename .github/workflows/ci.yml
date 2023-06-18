@@ -24,7 +24,7 @@ jobs:
         run: |
           mypy cli
           black --check cli/ tests/
-          isort cli/ tests/
+          isort --check cli/ tests/
           codespell cli
       
       - name: Run twine checker

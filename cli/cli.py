@@ -11,7 +11,8 @@ from .errors import *
 if TYPE_CHECKING:
     from typing import Any, Callable, List, Optional, Union
 
-__all__ = ("CLI", )
+__all__ = ("CLI",)
+
 
 class CLI:
     """

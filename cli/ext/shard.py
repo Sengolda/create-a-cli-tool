@@ -26,7 +26,12 @@ class Shard:
             ]
         ] = []
 
-        self.__shard_cli_commands__: List[Union[Command, Group,]] = [
+        self.__shard_cli_commands__: List[
+            Union[
+                Command,
+                Group,
+            ]
+        ] = [
             command
             for _, command in inspect.getmembers(self)
             if isinstance(

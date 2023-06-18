@@ -11,7 +11,7 @@ with open("README.rst", "r", encoding="utf-8") as f:
 if not version:
     raise RuntimeError("version not set...")
 
-extra_requires = {"docs": ["sphinx>=4.2.0", "furo"]}
+extras_requires = {"docs": ["sphinx>=4.2.0", "furo"]}
 
 
 packages = ["cli", "cli.ext"]
@@ -35,13 +35,14 @@ args = dict(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
         "Typing :: Typed",
     ],
     packages=packages,
     include_package_data=True,
     python_requires=">=3.6",  # Cause of f-strings.
     license="MIT",
-    extra_requires=extra_requires,
+    extras_requires=extras_requires,
 )
 
 setup(**args)

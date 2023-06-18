@@ -36,7 +36,7 @@ jobs:
   test:
     strategy:
       matrix:
-        os: ['windows-latest', 'ubuntu-latest']
+        os: ['windows-latest', 'ubuntu-20.04']
         pyver: ['3.6', '3.7', '3.8', '3.9', '3.10', '3.11']
     runs-on: ${{ matrix.os }}
     steps:
